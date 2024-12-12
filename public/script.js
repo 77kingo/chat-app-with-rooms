@@ -14,8 +14,12 @@ joinRoomButton.addEventListener('click', () => {
     currentRoom = roomInput.value;
     if (currentRoom) {
         socket.emit('joinRoom', currentRoom);
-        roomSelectionDiv.style.display = 'none';
-        chatDiv.style.display = 'block';
+        roomSelectionDiv.classList.add('animated', 'slideOutUp');
+        setTimeout(() => {
+            roomSelectionDiv.style.display = 'none';
+            chatDiv.style.display = 'block';
+            chatDiv.classList.add('animated', 'slideInUp');
+        }, 500);
     }
 });
 
@@ -30,5 +34,7 @@ sendMessageButton.addEventListener('click', () => {
 socket.on('message', (message) => {
     const messageElement = document.createElement('p');
     messageElement.textContent = message;
+    messageElement.classList.add('animated', 'bounceIn');
     messagesDiv.appendChild(messageElement);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
 });
